@@ -6,7 +6,6 @@
 
 import glob
 import os
-from pathlib import Path
 import re
 import sys
 
@@ -41,9 +40,8 @@ def generate_pattern_file(directory):
         fnames = sorted(glob.glob(pattern))
         if len(fnames) == 0:
             continue
-        name = Path(subdir).stem
+        name = values[len(values)-1]
         file_name = name + ".pattern"
-
         t1, c1 = find_range(fnames[0])
         if t1 == -1 or c1 == -1:
             continue
