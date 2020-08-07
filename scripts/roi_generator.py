@@ -107,16 +107,13 @@ def parse_dir(directory, conn):
             if file_name.find("fileList") > 0:
                 continue
             name = file_name.split("_frames")[0]
-            name = name + "%"
-            print(name)
-            query = "select i from Image i where i.name like '%s'" % name
-            images = query_svc.findAllByQuery(query, None)
-            if len(images) == 0:
+            name += ".pattern"
+            image = conn.getObjects("Image", attributes={"name": name})
+            if image is None:
                 print("image not found")
                 continue
             else:
                 print("processing roi")
-                image = conn.getObject("Image", images[0].getId())
                 process_file(f, image, svc)
 
 
