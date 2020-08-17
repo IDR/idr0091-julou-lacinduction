@@ -64,7 +64,7 @@ def generate_pattern_file(directory):
         value += "_c<%s-%s>" % (c1, c2)
         value += ".tif"
         print("creating pattern file: %s" % file_name)
-        with open(os.path.join(generation_path, file_name), "w") as f:
+        with open(os.path.join(pattern_location, file_name), "w") as f:
             f.write(value)
 
 
