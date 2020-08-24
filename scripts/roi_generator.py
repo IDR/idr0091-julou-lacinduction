@@ -2,7 +2,9 @@
 
 # This script parses the value and generates lines in the centre of the image
 # The script need to be run Julou_2020_lacInduction_GL_Preproc directory
+import argparse
 import csv
+import getpass
 import os
 from pathlib import Path
 import sys
@@ -29,7 +31,6 @@ def process_row(row, x, roi, end_type, parent_id=-1):
     line.y2 = rdouble(bottom)
     line.theT = rint(frame)
     name = end_type
-    #print(parent_id)
     if parent_id > -1:
         name += ", come from shapeID:%s" % parent_id
     line.textValue = rstring(name)
@@ -107,28 +108,34 @@ def parse_dir(directory, conn):
             if file_name.find("fileList") > 0:
                 continue
             name = file_name.split("_frames")[0]
-            name += ".pattern"
-            image = conn.getObjects("Image", attributes={"name": name})
-            if image is None:
+            name = name + "%"
+            print(name)
+            query = "select i from Image i where i.name like '%s'" % name
+            images = query_svc.findAllByQuery(query, None)
+            if len(images) == 0:
                 print("image not found")
                 continue
             else:
                 print("processing roi")
+                image = conn.getObject("Image", images[0].getId())
                 process_file(f, image, svc)
 
 
-def main(argv):
-    if len(argv) == 0:
-        directory = os.getcwd()
-    else:
-        directory = argv[0]
-    print(directory)
+def main(args):
+    parser = argparse.ArgumentParser()
+    parser.add_argument('inputdir')
+    parser.add_argument('--username', default="demo")
+    parser.add_argument('--server', default="localhost")
+    parser.add_argument('--port', default=4064)
+    args = parser.parse_args(args)
+    password = getpass.getpass()
     # Load the image corresponding to the file name
     # Create a connection
     try:
-        conn = BlitzGateway(username, password, host=servername, port=4064)
+        conn = BlitzGateway(args.username, password, host=args.server,
+                            port=args.port)
         conn.connect()
-        parse_dir(directory, conn)
+        parse_dir(args.inputdir, conn)
     finally:
         conn.close()
 
