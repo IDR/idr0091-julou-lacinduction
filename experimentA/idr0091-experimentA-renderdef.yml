@@ -1,7 +1,7 @@
 ---
 # channel 1 colour changed from original red -> gray
 # channel 3 colour changed from original blue -> green and turn the channel off
-
+version: 2
 channels:
   1:
     # gray
