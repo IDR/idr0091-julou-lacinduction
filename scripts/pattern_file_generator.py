@@ -35,21 +35,16 @@ def generate_pattern_file(directory):
     a pattern file in each directory containing the *.tif images
     """
     date = str(datetime.date.today()).replace("-", "")
-    pattern_location = generation_path + date + "-pattern"
+    pattern_location = os.path.join(generation_path, date + "-pattern")
     if (os.path.exists(pattern_location)):
         shutil.rmtree(pattern_location)
-    os.mkdir(pattern_location, 0755)
+    os.mkdir(pattern_location, 0o755)
     for subdir, dirs, files in os.walk(directory):
-        values = subdir.split("/")
-        if len(values) == 1:
-            v = values[0]
-        else:
-            v = values[1]
-        pattern = subdir + "/*.tif"
+        path, name = os.path.split(subdir)
+        pattern = os.path.join(subdir, "*.tif")
         fnames = sorted(glob.glob(pattern))
         if len(fnames) == 0:
             continue
-        name = values[len(values)-1]
         file_name = name + ".pattern"
         t1, c1 = find_range(fnames[0])
         if t1 == -1 or c1 == -1:
@@ -57,12 +52,8 @@ def generate_pattern_file(directory):
         t2, c2 = find_range(fnames[-1])
         if t2 == -1 or c2 == -1:
             continue
-        value = base_path
-        value += subdir + "/"
-        value += name + "_t"
-        value += "<%s-%s>" % (t1, t2)
-        value += "_c<%s-%s>" % (c1, c2)
-        value += ".tif"
+        v = name + "_t<%s-%s>_c<%s-%s>.tif" % (t1, t2, c1, c2)
+        value = os.path.join(base_path, subdir, v)
         print("creating pattern file: %s" % file_name)
         with open(os.path.join(pattern_location, file_name), "w") as f:
             f.write(value)
