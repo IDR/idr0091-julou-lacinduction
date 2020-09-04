@@ -1,0 +1,15 @@
+---
+# channel 1 colour changed from original red -> gray
+# channel 3 colour changed from original blue -> green and turn the channel off
+
+channels:
+  1:
+    # gray
+    color: "808080"
+  2:
+    # green
+    color: "00FF00"
+  3:
+    # green
+    color: "00FF00"
+    active: False
