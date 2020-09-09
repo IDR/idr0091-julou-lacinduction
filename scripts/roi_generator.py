@@ -14,15 +14,28 @@ from omero.model import LineI, RoiI
 from omero.rtypes import rdouble, rint, rstring
 from omero.gateway import BlitzGateway
 
+offset_values = {}
+ref_file = "ExportedCellStats_"
+ref_pattern = "trackRegionInterval"
 
-def process_row(row, x, roi, end_type, parent_id=-1):
+def get_offset(name):
+    name = ref_file + name
+    value = offset_values.get(name)
+    if value is None:
+        return value
+    else:
+        v = value.replace("[", "").replace("]", "")
+        return list(v.split(","))
+
+
+def process_row(row, x, y, roi, end_type, parent_id=-1):
     """
     Convert each row into a line shape.
     Add the identifier of the parent shape if applicable.
     """
     frame = int(row[0])
-    top = int(row[1])
-    bottom = int(row[2])
+    top = int(row[1]) + y
+    bottom = int(row[2]) + y
     # Create the line
     line = LineI()
     line.x1 = rdouble(x)
@@ -35,7 +48,7 @@ def process_row(row, x, roi, end_type, parent_id=-1):
         name += ", come from shapeID:%s" % parent_id
     line.textValue = rstring(name)
     # Use yellow
-    line.strokeColor = rint(int.from_bytes([255, 255, 0, 255],
+    line.strokeColor = rint(int.from_bytes([255, 0, 0, 255],
                             byteorder='big', signed=True))
     roi.addShape(line)
     return frame
@@ -52,7 +65,7 @@ def get_last_shape(roi, timepoint):
     return -1
 
 
-def process_file(inputfile, image, svc):
+def process_file(inputfile, image, svc, offset):
     """
     Read each line of the file
     """
@@ -63,6 +76,10 @@ def process_file(inputfile, image, svc):
     parent_id = -1
     cell_id = 0
     x = image.getSizeX()/2
+    y = 0
+    if offset is not None:
+        y = image.getSizeY() - int(offset[1])
+
     last_frame = 0
     with open(inputfile) as fp:
         csv_reader = csv.reader(fp, delimiter="\t", quotechar='"')
@@ -89,7 +106,7 @@ def process_file(inputfile, image, svc):
                     else:
                         parent_shape_id = -1
                 else:
-                    last_frame = process_row(row, x, roi, end_type,
+                    last_frame = process_row(row, x, y, roi, end_type,
                                              parent_shape_id)
                     parent_shape_id = -1
             line_count += 1
@@ -107,9 +124,9 @@ def parse_dir(directory, conn):
             file_name = Path(f).stem
             if file_name.find("fileList") > 0:
                 continue
-            name = file_name.split("_frames")[0]
-            name = name + "%"
-            print(name)
+            original_name = file_name.split("_frames")[0]
+            print(original_name)
+            name = original_name + "%"
             query = "select i from Image i where i.name like '%s'" % name
             images = query_svc.findAllByQuery(query, None)
             if len(images) == 0:
@@ -118,11 +135,31 @@ def parse_dir(directory, conn):
             else:
                 print("processing roi")
                 image = conn.getObject("Image", images[0].getId())
-                process_file(f, image, svc)
+                process_file(f, image, svc, get_offset(original_name))
+
+
+
+def retrieve_offset(directory):
+    """
+    Parse the offset values from the ExportedCellStats_XXX.csv files
+    """
+    print(directory)
+    for subdir, dirs, files in os.walk(directory):
+        for f in Path(subdir).glob('*.csv'):
+            file_name = Path(f).stem
+            print(file_name)
+            with open(f) as fp:
+                lines = fp.readlines()
+                for line in lines:
+                    if ref_pattern in line:
+                        values = line.split("=")
+                        offset_values[file_name] = values[1].strip()
+                        break
 
 
 def main(args):
     parser = argparse.ArgumentParser()
+    parser.add_argument('refdir')
     parser.add_argument('inputdir')
     parser.add_argument('--username', default="demo")
     parser.add_argument('--server', default="localhost")
@@ -135,9 +172,11 @@ def main(args):
         conn = BlitzGateway(args.username, password, host=args.server,
                             port=args.port)
         conn.connect()
+        retrieve_offset(args.refdir)
         parse_dir(args.inputdir, conn)
     finally:
         conn.close()
+        print("done")
 
 
 if __name__ == "__main__":
