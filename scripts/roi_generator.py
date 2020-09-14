@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 # This script parses the value and generates lines in the centre of the image
-# The script need to be run Julou_2020_lacInduction_GL_Preproc directory
+# The script need to be run:
+# roi_generator.py Julou_2020_lacInduction_GL_Images Julou_2020_lacInduction_GL_Preproc
 import argparse
 import csv
 import getpass
@@ -134,8 +135,9 @@ def parse_dir(directory, conn):
                 continue
             else:
                 print("processing roi")
-                image = conn.getObject("Image", images[0].getId())
-                process_file(f, image, svc, get_offset(original_name))
+                for index in range(len(images)):
+                    image = conn.getObject("Image", images[index].getId())
+                    process_file(f, image, svc, get_offset(original_name))
 
 
 
