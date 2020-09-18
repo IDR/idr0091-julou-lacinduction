@@ -1,0 +1,64 @@
+---
+name: idr0091-julou-induction/experimentA
+version: 1
+
+defaults:
+  include: no
+  type: string
+  includeclient: yes
+  visible: yes
+  omitempty: yes
+
+columns:
+
+  - name: Characteristics [Organism]
+    clientname: Organism
+    include: yes
+
+  - name: Characteristics [Strain]
+    clientname: Strain
+    include: yes
+
+  - name: Experimental Condition [Media]
+    clientname: Media
+    include: yes
+
+  - name: Experimental Condition [Steps]
+    clientname: Steps
+    include: yes
+
+  - name: Experimental Condition [Flow Control]
+    clientname: Flow Control
+    include: yes
+
+  - name: Comment [Preculture]
+    clientname: Preculture
+    include: yes
+
+  - name: Comment [Image File Type]
+    clientname: Image File Type
+    include: yes
+
+  - name: Channels
+    clientname: Channels
+    include: yes
+
+
+  ######################################################################
+  # mapr groups
+  ######################################################################
+
+  - group:
+      namespace: openmicroscopy.org/mapr/organism
+      columns:
+        - name: Characteristics [Organism]
+          clientname: Organism
+          include: yes
+
+
+advanced:
+  ignore_missing_primary_key: yes
+  primary_group_keys:
+    - namespace: openmicroscopy.org/mapr/organism
+      keys:
+        - Organism
