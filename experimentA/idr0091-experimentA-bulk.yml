@@ -2,7 +2,7 @@
 path: "idr0091-experimentA-filePaths.tsv"
 continue: true
 transfer: "ln_s"
-exclude: "clientpath"
+#exclude: "clientpath"
 parallel_upload: "10"
 parallel_fileset: "10"
 skip:
