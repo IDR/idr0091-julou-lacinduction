@@ -26,7 +26,7 @@ create the ROIs.
 ### idr-pilot
 | Task | Duration | Checked |
 | :----: |:----:| :----:|
-| Images| 2 days? | -- |
+| Images| 36 hours | -- |
 | Thumbnails | -- | -- |
 | Annotations | -- | -- |
 
