@@ -1,15 +1,18 @@
 ---
-# channel 1 colour changed from original red -> gray
+# channel 1 colour changed from original red -> white
 # channel 3 colour changed from original blue -> green and turn the channel off
 version: 2
 channels:
   1:
-    # gray
-    color: "808080"
+    # white
+    color: "FFFFFF"
+    label: "Phase"
   2:
     # green
     color: "00FF00"
+    label: "GFP"
   3:
     # green
     color: "00FF00"
     active: False
+    label: "GFP-raw"
