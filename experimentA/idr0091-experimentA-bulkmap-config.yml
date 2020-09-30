@@ -11,10 +11,6 @@ defaults:
 
 columns:
 
-  - name: Characteristics [Organism]
-    clientname: Organism
-    include: yes
-
   - name: Characteristics [Strain]
     clientname: Strain
     include: yes
@@ -39,9 +35,6 @@ columns:
     clientname: Image File Type
     include: yes
 
-  - name: Channels
-    clientname: Channels
-    include: yes
 
 
   ######################################################################
