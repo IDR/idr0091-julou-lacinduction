@@ -14,6 +14,9 @@ NAMESPACE = omero.constants.namespaces.NSBULKANNOTATIONS
 KEY = "Image File Type"
 
 CHANNELS_RAW = {1: "Phase", 2: "GFP"}
+CHANNELS_FLATFIELD = {1: "GFP"}
+
+
 
 def change_name(conn, image):
     for ann in image.listAnnotations():
@@ -23,6 +26,9 @@ def change_name(conn, image):
             name_dict = {}
             if image_type == "raw":
                 conn.setChannelNames("Image", [image.getId()], CHANNELS_RAW,
+                                     channelCount=None)
+            elif image_type == "flatfield":
+                conn.setChannelNames("Image", [image.getId()], CHANNELS_FLATFIELD,
                                      channelCount=None)
 
 def load_images(conn, id):
