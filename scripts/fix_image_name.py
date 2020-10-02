@@ -66,6 +66,7 @@ def main(args):
         conn = BlitzGateway(args.username, password, host=args.server,
                             port=args.port)
         conn.connect()
+        conn.c.enableKeepAlive(60)
         fix_image_name(conn)
     finally:
         conn.close()
