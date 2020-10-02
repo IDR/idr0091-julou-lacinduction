@@ -20,6 +20,10 @@ ROIs
 After import, run the script [roi_generator.py](scripts/pattern_file_generator.py) to
 create the ROIs.
 
+Settings
+--------
+
+After running the annotation, run [rename_channels.py](scripts/rename_channels.py) to fix the channel's names and render the flatfied images.
 
 ## Import Status
 
