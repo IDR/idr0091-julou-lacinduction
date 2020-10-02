@@ -17,26 +17,35 @@ CHANNELS_RAW = {1: "Phase", 2: "GFP"}
 CHANNELS_FLATFIELD = {1: "GFP"}
 
 
+def set_rnd_settings(image):
+    image.setActiveChannels([1], colors=["00FF00"])
+    image.setColorRenderingModel()
+    image.saveDefaults()
+    image.getThumbnail(size=(96,), direct=True)
+
 
 def change_name(conn, image):
     for ann in image.listAnnotations():
         if ann.OMERO_TYPE == omero.model.MapAnnotationI \
            and ann.getNs() == NAMESPACE:
             image_type = dict(ann.getValue()).get(KEY)
-            name_dict = {}
             if image_type == "raw":
                 conn.setChannelNames("Image", [image.getId()], CHANNELS_RAW,
                                      channelCount=None)
             elif image_type == "flatfield":
-                conn.setChannelNames("Image", [image.getId()], CHANNELS_FLATFIELD,
+                print("image %s" % image.getId())
+                conn.setChannelNames("Image", [image.getId()],
+                                     CHANNELS_FLATFIELD,
                                      channelCount=None)
+                set_rnd_settings(image)
+
 
 def load_images(conn, id):
     datasets = conn.getObjects('Dataset', opts={'project': id})
     for dataset in datasets:
         for image in dataset.listChildren():
-            print("image %s" % image.getId())
             change_name(conn, image)
+
 
 def main(args):
     parser = argparse.ArgumentParser()
@@ -54,6 +63,7 @@ def main(args):
         load_images(conn, args.id)
     finally:
         conn.close()
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])
