@@ -18,10 +18,13 @@ CHANNELS_FLATFIELD = {1: "GFP"}
 
 
 def set_rnd_settings(image):
-    image.setActiveChannels([1], colors=["00FF00"])
-    image.setColorRenderingModel()
-    image.saveDefaults()
-    image.getThumbnail(size=(96,), direct=True)
+    try:
+        image.setActiveChannels([1], colors=["00FF00"])
+        image.setColorRenderingModel()
+        image.saveDefaults()
+        image.getThumbnail(size=(96,), direct=False)
+    finally:
+        image._closeRE()
 
 
 def change_name(conn, image):
