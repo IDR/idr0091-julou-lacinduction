@@ -171,10 +171,11 @@ def main(args):
     # Load the image corresponding to the file name
     # Create a connection
     try:
+        retrieve_offset(args.refdir)
         conn = BlitzGateway(args.username, password, host=args.server,
                             port=args.port)
         conn.connect()
-        retrieve_offset(args.refdir)
+        conn.c.enableKeepAlive(60)
         parse_dir(args.inputdir, conn)
     finally:
         conn.close()
