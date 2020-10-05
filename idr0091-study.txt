@@ -16,11 +16,11 @@ Study Organism Term Source REF	NCBITaxon
 Study Organism Term Accession	562																			
 Study Experiments Number	1
 
-Study External URL	https://www.biorxiv.org/content/10.1101/2020.01.04.894766v1
+Study External URL	
 
 Study BioImage Archive Accession
 
-Study Public Release Date	
+Study Public Release Date	2020-10-06	
 																																	
 # Study Publication																																	
 Study PubMed ID																				
