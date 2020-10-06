@@ -8,7 +8,7 @@ Study Title	Subpopulations of sensorless bacteria drive fitness influctuating en
 Study Type	time-lapse imaging																					
 Study Type Term Source REF	OMIT																																
 Study Type Term Accession	OMIT_0027490																																
-Study Description	We use quantitative time-lapse microscopy combined with microfluidics to analyse the induction dynamiucs of the lac operon in single bacteria cells.														
+Study Description	We use quantitative time-lapse microscopy combined with microfluidics to analyse the induction dynamics of the lac operon in single bacteria cells.														
 Study Key Words	gene regulation	lac operon	single-cell microscopy	mother machine	induction lag	diauxie																									
 Study Organism	Escherichia coli
 
