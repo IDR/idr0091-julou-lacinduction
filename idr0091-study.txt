@@ -2,7 +2,7 @@
 # STUDY DESCRIPTION SECTION											
 # Section with generic information about the study including title, description, publication details (if applicable) and contact details																											
 Comment[IDR Study Accession]	idr0091																					
-Study Title	Subpopulations of sensorless bacteria drive fitness influctuating environments
+Study Title	Subpopulations of sensorless bacteria drive fitness in fluctuating environments
 
 
 Study Type	time-lapse imaging																					
