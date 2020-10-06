@@ -24,7 +24,7 @@ Study Public Release Date	2020-10-06
 																																	
 # Study Publication																																	
 Study PubMed ID																				
-Study Publication Title	Subpopulations of sensorless bacteria drive fitness influctuating environments
+Study Publication Title	Subpopulations of sensorless bacteria drive fitness in fluctuating environments
 
 Study Author List	Julou T, Zweifel L, Blank D, Fiori A, van Nimwegen E
 
