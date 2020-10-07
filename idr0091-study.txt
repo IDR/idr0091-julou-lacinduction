@@ -43,7 +43,7 @@ Study Person Address	Computational and Systems Biology, Biozentrum – Universit
 Study Person ORCID	0000-0001-7123-198X																			
 Study Person Roles	submitter																																										
 # Study License and Data DOI																																	
-Study License	CC-BY 4.0
+Study License	CC BY 4.0
 
 Study License URL	https://creativecommons.org/licenses/by/4.0/									
 Study Copyright	Julou et al.																		
