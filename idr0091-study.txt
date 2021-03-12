@@ -23,13 +23,13 @@ Study BioImage Archive Accession
 Study Public Release Date	2020-10-06	
 																																	
 # Study Publication																																	
-Study PubMed ID																				
+Study PubMed ID	33270631																				
 Study Publication Title	Subpopulations of sensorless bacteria drive fitness in fluctuating environments
 
 Study Author List	Julou T, Zweifel L, Blank D, Fiori A, van Nimwegen E
 
-Study PMC ID																				
-Study DOI							
+Study PMC ID	PMC7738171																				
+Study DOI	https://doi.org/10.1371/journal.pbio.3000952					
 																																	
 # Study Contacts																				
 Study Person Last Name	Julou
